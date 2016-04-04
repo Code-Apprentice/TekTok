@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="TekTokDroid.TekTokDroid" android:versionCode="1" android:versionName="1.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="TekTokDroid.TekTokDroid" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
   <!--suppress UsesMinSdkAttributes-->
   <uses-sdk android:minSdkVersion="15" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-  <application android:label="TekTokDroid" android:name="mono.android.app.Application" android:allowBackup="true" android:debuggable="true">
+  <application android:label="TekTokDroid" android:icon="@drawable/newicon" android:name="mono.android.app.Application" android:allowBackup="true" android:debuggable="true">
     <activity android:label="TekTokDroid" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar" android:name="md59ed621e29e1702627842f2a0ab5a67d9.LoginActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -13,6 +14,9 @@
     </activity>
     <activity android:label="MainActivityTekTokkee" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar" android:name="md59ed621e29e1702627842f2a0ab5a67d9.MainActivityTekTokkee" />
     <activity android:label="MainActivityTekTokker" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar" android:name="md59ed621e29e1702627842f2a0ab5a67d9.MainActivityTekTokker" />
+    <activity android:label="queryLoginActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar" android:name="md59ed621e29e1702627842f2a0ab5a67d9.queryLoginActivity" />
+    <activity android:label="ticketActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.NoTitleBar" android:name="md59ed621e29e1702627842f2a0ab5a67d9.ticketActivity" />
+    <activity android:label="Available Tickets" android:name="md59ed621e29e1702627842f2a0ab5a67d9.ticketListing" />
     <activity android:label="Web Authenticator" android:name="md550f8a10a740eb4fb6376baab8337ce22.FormAuthenticatorActivity" />
     <activity android:label="Web Authenticator" android:name="md550f8a10a740eb4fb6376baab8337ce22.WebAuthenticatorActivity" />
     <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="TekTokDroid.TekTokDroid.mono.MonoRuntimeProvider.__mono_init__" />

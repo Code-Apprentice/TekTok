@@ -51,5 +51,15 @@ namespace TekTokDroid
             const int notificationId = 0;
             notificationManager.Notify(notificationId, notification);
         }
+        public static AlertDialog DialogBoxCreator(string title, string message, Context context) //For creating a dialog box, DO NOT CHANGE UNLESS YOU KNOW WHAT YOU'RE DOING!!!
+        {
+            Android.App.AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            AlertDialog alertDialog = builder.Create();
+            alertDialog.SetTitle(title);
+            alertDialog.SetIcon(Android.Resource.Drawable.IcDialogAlert);
+            alertDialog.SetMessage(message);
+            alertDialog.SetButton("OK", (s, ev) => { });
+            return alertDialog;
+        }
     }
 }

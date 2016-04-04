@@ -37,3 +37,11 @@ C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\bin\
 C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\bin\Debug\MySql.Data.CF.dll
 C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\layout\maintektokker.xml
 C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\layout\maintektokkee.xml
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\layout\ticketlayout.xml
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\newicon.png
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\cannotreceiverequests.png
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\helpbeacondetected.png
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\helprequestsavailable.png
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\tektokawaitinghelprequest.png
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\layout\queryloginlayout.xml
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\nointernet.png
