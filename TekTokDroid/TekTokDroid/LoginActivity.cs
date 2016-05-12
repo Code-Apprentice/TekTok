@@ -95,7 +95,6 @@ namespace TekTokDroid
                     // The users email address will be used to identify data in MySQL
                     string userJson = response.GetResponseText();
                     _User = JsonConvert.DeserializeObject<User>(userJson);
-                    
                     e.Account.Username = _User.Email;
                     
                     if (_User.Email.Contains("@alice-smith.edu.my")) 

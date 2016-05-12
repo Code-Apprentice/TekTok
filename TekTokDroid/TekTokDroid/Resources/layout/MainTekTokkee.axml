@@ -12,16 +12,45 @@
         p1:id="@+id/linearLayoutTekTokkee"
         p1:layout_alignParentTop="true"
         p1:layout_alignParentRight="true">
+        <Button
+            p1:text="Logout"
+            p1:id="@+id/logoutButtonTekTokkee"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        p1:orientation="vertical"
+        p1:id="@+id/linearLayout2TekTokkee"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:minWidth="25px"
+        p1:minHeight="25px"
+        p1:layout_centerInParent="true">
+        <ImageView
+            p1:src="@drawable/helpbeaconbutton"
+            p1:layout_width="300px"
+            p1:layout_height="300px"
+            p1:id="@+id/helpPingButton" />
+        <TextView
+            p1:text="Ping for Help"
+            p1:textAppearance="?android:attr/textAppearanceMedium"
+            p1:id="@+id/textView1"
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:gravity="center_horizontal" />
+    </LinearLayout>
+    <LinearLayout
+        p1:orientation="horizontal"
+        p1:id="@+id/linearLayout3TekTokkee"
+        p1:layout_width="wrap_content"
+        p1:layout_height="wrap_content"
+        p1:minWidth="25px"
+        p1:minHeight="25px">
         <TextView
             p1:text="Large Text"
             p1:textAppearance="?android:attr/textAppearanceLarge"
             p1:layout_width="wrap_content"
             p1:layout_height="match_parent"
             p1:id="@+id/nameBoxTekTokkee" />
-        <Button
-            p1:text="Logout"
-            p1:id="@+id/logoutButtonTekTokkee"
-            p1:layout_width="wrap_content"
-            p1:layout_height="match_parent" />
     </LinearLayout>
 </RelativeLayout>

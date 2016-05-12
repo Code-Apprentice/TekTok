@@ -33,6 +33,10 @@ namespace TekTokDroid
             //-------------------------------------------------------------------------------------//
             this.Finish(); //Finish activity, return to login
         }
+        private void requestATicket()
+        {
+            StartActivity(new Intent(this,typeof(ticketRequestActivity)));
+        }
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -40,8 +44,9 @@ namespace TekTokDroid
             Android.Widget.Button logoutB = FindViewById<Android.Widget.Button>(Resource.Id.logoutButtonTekTokkee);
             logoutB.Click += delegate { LogOut(); };
             TextView nameBox = FindViewById<TextView>(Resource.Id.nameBoxTekTokkee);
-            nameBox.Text = "Welcome TekTokkee, " + LoginActivity._User.Name;
-            // Create your application here
+            nameBox.Text = "Welcome TekTokkee,\n" + LoginActivity._User.Name;
+            ImageView ticketRequest = FindViewById<ImageView>(Resource.Id.helpPingButton);
+            ticketRequest.Click += delegate { requestATicket(); };
         }
     }
 }

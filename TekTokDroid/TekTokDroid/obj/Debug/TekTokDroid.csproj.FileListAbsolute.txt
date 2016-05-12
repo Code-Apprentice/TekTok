@@ -45,3 +45,8 @@ C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\
 C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\tektokawaitinghelprequest.png
 C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\layout\queryloginlayout.xml
 C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\nointernet.png
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\layout\ticketform.xml
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\layout\ticketsendpinglayout.xml
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\helpbeaconbutton.png
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\drawable\helpbeacongif.mp4
+C:\Users\Raka\Documents\Visual Studio 2015\Projects\TekTokDroid\TekTokDroid\obj\Debug\res\layout\tektokkeeticket.xml

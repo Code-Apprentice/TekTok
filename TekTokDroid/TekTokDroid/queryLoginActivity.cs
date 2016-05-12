@@ -52,7 +52,7 @@ namespace TekTokDroid
                         adapter.Fill(authUserCred);
                     }
                     LoginActivity._User.Name = authUserCred.Tables[0].Rows[0]["Name"].ToString(); //Set their name from the Name column
-
+                    
                     if ((bool)authUserCred.Tables[0].Rows[0]["TekTokker"]) //If user is a TekTokker
                     {
                         textProg.Text = "Authenticated as a TekTokker...";
@@ -104,6 +104,7 @@ namespace TekTokDroid
             {
                 textProg.Text = noInternet.Message;
                 await System.Threading.Tasks.Task.Delay(1500);
+                this.Finish();
             }
         }
         protected override void OnCreate(Bundle savedInstanceState)

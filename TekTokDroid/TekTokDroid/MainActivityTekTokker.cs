@@ -333,7 +333,7 @@ namespace TekTokDroid
                         }
                         catch
                         {
-                            cancelHired(); //Just use this to set hired to false, if ticket doesn't exist it just won't update any rows
+                            cancelHired(); //Set hired to false
                             if (!appIsOnScreen)
                             {
                                 CustomBuilders.notifBuilder("TekTok Help Ticket", "Ticket has been finished/cancelled by requestor!", typeof(MainActivityTekTokker), GetSystemService(Context.NotificationService) as NotificationManager);
