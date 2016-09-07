@@ -44,7 +44,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="907" y="108"/>
+            <point key="canvasLocation" x="895" y="108"/>
         </scene>
         <!--Tektokker View Controller-->
         <scene sceneID="bHS-wz-Muz">
@@ -379,13 +379,6 @@
                                     <action selector="helpReqAction:" destination="Z8z-1d-OTA" eventType="touchUpInside" id="P7C-r5-d2e"/>
                                 </connections>
                             </button>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2cC-n7-8Y6">
-                                <rect key="frame" x="244" y="273" width="112" height="132"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="112" id="6Kt-gf-Tbs"/>
-                                    <constraint firstAttribute="height" constant="132" id="vFn-La-Hau"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBe-7s-BzU">
                                 <rect key="frame" x="184" y="115" width="231" height="51"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
@@ -402,6 +395,13 @@
                                     <action selector="logout:" destination="Z8z-1d-OTA" eventType="touchUpInside" id="duW-3R-Szg"/>
                                 </connections>
                             </button>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2cC-n7-8Y6">
+                                <rect key="frame" x="244" y="273" width="112" height="132"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="112" id="6Kt-gf-Tbs"/>
+                                    <constraint firstAttribute="height" constant="132" id="vFn-La-Hau"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

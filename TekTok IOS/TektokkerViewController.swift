@@ -8,7 +8,7 @@
 
 import UIKit
 
-
+//ticket object
 class Ticket: Equatable {
     var teachername:String = ""
     var room:String = ""
@@ -24,11 +24,20 @@ func ==(lhs:Ticket, rhs:Ticket) -> Bool { // Implement Equatable
 
 class TektokkerViewController: UIViewController {
     
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
     
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
+    
+    //IBOutlets are objects on the storyboard
     @IBOutlet weak var buttonOut: UIButton!
     
     @IBOutlet weak var logOUT: UIButton!
     @IBAction func logoutaction(sender: AnyObject) {
+        //sign out
         GVar.keepChecking = false
         GIDSignIn.sharedInstance().signOut()
         dispatch_async(dispatch_get_main_queue()) {
@@ -57,12 +66,10 @@ class TektokkerViewController: UIViewController {
             try con.open("sql6.freemysqlhosting.net", user: "sql6133445", passwd: "hhh6WUDEWP")
             
             try con.use(db_name)
-            
+            //cancel a ticket
             let select_stmt = try con.prepare("SELECT * FROM Tickets WHERE TekTokker = '"+GVar.fullName+"'")
             let res = try select_stmt.query([])
             let rows = try res.readAllRows()
-            
-            //"UPDATE `sql6112602`.`Tickets` SET `Cancelled` = '1' AND `TekTokker` = '' WHERE `Tickets`.`TeacherName` = '{0}' LIMIT 1 ; UPDATE `sql6112602`.`Users` SET `Hired` = false WHERE Name = '{1}'", aTicket["TeacherName"], LoginActivity._User.Name
             try con.query("UPDATE Tickets SET Cancelled = '1', TekTokker = '' WHERE TeacherName = '" + String(rows![0][0]["TeacherName"]!) + "' LIMIT 1")
             let name = GVar.fullName
             try con.query("UPDATE Users SET Hired = '0' WHERE Name = '" + name + "'")
@@ -73,6 +80,7 @@ class TektokkerViewController: UIViewController {
         }
         
     }
+    //so other view controllers can segue to this one if they are on the same chain on the storyboard
     @IBAction func unwindToTekTokker(segue: UIStoryboardSegue) {
     }
     
@@ -94,7 +102,7 @@ class TektokkerViewController: UIViewController {
             let res = try select_stmt.query([])
             let rows = try res.readAllRows()
             
-            //"UPDATE `sql6112602`.`Tickets` SET `Cancelled` = '1' AND `TekTokker` = '' WHERE `Tickets`.`TeacherName` = '{0}' LIMIT 1 ; UPDATE `sql6112602`.`Users` SET `Hired` = false WHERE Name = '{1}'", aTicket["TeacherName"], LoginActivity._User.Name
+            //update ticket to finished
             try con.query("UPDATE Tickets SET Finished = '1', TekTokker = '' WHERE TeacherName = '" + String(rows![0][0]["TeacherName"]!) + "' LIMIT 1")
             let name = GVar.fullName
             try con.query("UPDATE Users SET Hired = '0' WHERE Name = '" + name + "'")
@@ -109,7 +117,7 @@ class TektokkerViewController: UIViewController {
     @IBOutlet weak var finishOutlet: UIButton!
     
     override func viewDidLoad() {
-        
+        //displays ticket information
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true;
         let message = "Welcome, " + GVar.givenName
@@ -121,7 +129,7 @@ class TektokkerViewController: UIViewController {
         
     }
     
-    
+    //check for ticket
     override func viewDidAppear(animated: Bool){
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
@@ -143,9 +151,9 @@ class TektokkerViewController: UIViewController {
                     
                     print("bg test")
                     if(String(rows![0][0]["Hired"]!) == "0"){
-                        
+                        //if not hired
                         dispatch_async(dispatch_get_main_queue()) {
-                            
+                            //UI updates
                             
                             self.TeacherNameOutlet.hidden = true
                             self.Extrainfooutlet.hidden = true
@@ -156,21 +164,21 @@ class TektokkerViewController: UIViewController {
                         
                         let select_stmt = try con.prepare("SELECT * FROM Tickets")
                         let res = try select_stmt.query([])
-                        //let select_stmt = try con.query("SELECT * FROM Tickets WHERE TeacherName =?")
                         let rows = try res.readAllRows()
                         
-                        if((rows!.isEmpty)){
+                        if((rows!.isEmpty)){ //if empty
                             dispatch_async(dispatch_get_main_queue()) {
+                                //UI Update
                                 self.buttonOut.hidden = true
                                 self.AwaitImage.hidden = false
                             }
                         }
-                        else{
+                        else{ //if not empty
                             
                             for row in rows![0]{
                                 if(String(row["Accepted"]!) == "0"){
                                     
-                                    
+                                    //if any of the tickets arent accepted
                                     
                                     
                                     let newticket = Ticket()
@@ -181,7 +189,7 @@ class TektokkerViewController: UIViewController {
                                     
                                 }
                             }
-                            
+                            //if available tickets are found
                             if(self.tickets.count > 0){
                                 
                                 for ticket in self.tickets{
@@ -192,13 +200,16 @@ class TektokkerViewController: UIViewController {
                                         guard let settings = UIApplication.sharedApplication().currentUserNotificationSettings() else{ continue }
                                         
                                         if settings.types == .None {
+                                            //notification to allow notifications
                                             let ac = UIAlertController(title: "Please allow notifications!", message: "No permission to schedule Notification", preferredStyle: .Alert)
                                             ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                                             dispatch_async(dispatch_get_main_queue()) {
                                                 self.presentViewController(ac, animated: true, completion: nil)
                                             }
                                         }
+                                            
                                         else{
+                                            //notification
                                             print("notif")
                                             let notification = UILocalNotification()
                                             notification.alertBody = String(ticket.teachername) + " needs help @" + String(ticket.room)
@@ -214,13 +225,14 @@ class TektokkerViewController: UIViewController {
                                 }
                                
                                 dispatch_async(dispatch_get_main_queue()) {
+                                    //UI stuff
                                     self.buttonOut.hidden = false
                                     self.AwaitImage.hidden = true
                                 }
                                 //notify
                                
-                            }else{
-                                print("something should be happening")
+                            }else{//no tickets
+                                
                                 dispatch_async(dispatch_get_main_queue()) {
                                     self.buttonOut.hidden = true
                                     self.AwaitImage.hidden = false
@@ -235,7 +247,7 @@ class TektokkerViewController: UIViewController {
                     
                     
                     
-                    if(String(rows![0][0]["Hired"]!) == "1"){
+                    if(String(rows![0][0]["Hired"]!) == "1"){ //if hired
                         dispatch_async(dispatch_get_main_queue()) {
                             self.cancelOutlet.hidden = false
                             self.finishOutlet.hidden = false
@@ -243,24 +255,18 @@ class TektokkerViewController: UIViewController {
                             self.AwaitImage.hidden = true
                         }
                         
-                        /*
-                         let select_stmt = try con.prepare("SELECT * FROM Tickets")
-                         let res = try select_stmt.query([])
-                         //let select_stmt = try con.query("SELECT * FROM Tickets WHERE TeacherName =?")
-                         let rows = try res.readAllRows()
-                         
-                         */
+                        
                         let select_stmt = try con.prepare("SELECT * FROM Tickets WHERE TekTokker = '"+GVar.fullName+"'")
                         let res = try select_stmt.query([])
                         let rows = try res.readAllRows()
-                        if((rows!.isEmpty) == false){
-                            if(String(rows![0][0]["TimedOut"]!) == "1"){
+                        if((rows!.isEmpty) == false){ //if has job
+                            if(String(rows![0][0]["TimedOut"]!) == "1"){ //if timed out
                                 //alert
                                 dispatch_async(dispatch_get_main_queue()) {
+                                    //notification on main thread
                                     let myAlert = UIAlertController(title: "Ticket Timed Out", message: "Your Ticket has timed out", preferredStyle: UIAlertControllerStyle.Alert);
                                     let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){(ACTION) in
                                         
-                                        //myAlert.dismissViewControllerAnimated(false, completion: nil)
                                         do{
                                             try con.query("DELETE FROM Tickets WHERE TekTokker = '" + GVar.fullName + "'")
                                         }catch(let e){
@@ -297,6 +303,7 @@ class TektokkerViewController: UIViewController {
                                 
                             }
                             else{
+                                //display information
                                 dispatch_async(dispatch_get_main_queue()) {
                                     self.TeacherNameOutlet.text = "On the job for: " + String(rows![0][0]["TeacherName"]!)
                                     self.readyOutlet.text = "@ " + String(rows![0][0]["Room"]!)
@@ -306,9 +313,10 @@ class TektokkerViewController: UIViewController {
                                 }
                             }
                             
-                            sleep(1)
+                            sleep(1) //as to not chew battery
                         }
                         else{
+                            //if not on job
                             let select_stmt = try con.prepare("SELECT Hired FROM Users WHERE Name = '"+GVar.fullName+"'")
                             let res = try select_stmt.query([])
                             let rows = try res.readAllRows()

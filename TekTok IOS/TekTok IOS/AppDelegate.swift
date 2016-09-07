@@ -12,6 +12,8 @@ import GoogleSignIn
 import MySqlSwiftNative
 import Foundation
 
+
+//global variables
 struct GVar{
     static var userId = ""
     static var idToken = ""
@@ -28,8 +30,10 @@ struct GVar{
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
+    
     var window: UIWindow?
 
+    //google sign in stuff
 
     func application(application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -53,23 +57,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
                 withError error: NSError!) {
         if (error == nil) {
-            // Perform any operations on signed in user here.
+            //get user information and add it to the global variables list
             
-            
-            GVar.userId = user.userID                  // For client-side use only!
-            GVar.idToken = user.authentication.idToken // Safe to send to the server
+            GVar.userId = user.userID
+            GVar.idToken = user.authentication.idToken
             GVar.fullName = user.profile.name
             GVar.givenName = user.profile.givenName
             GVar.familyName = user.profile.familyName
             GVar.email = user.profile.email
-            
-            // ...
-            // Access the storyboard and fetch an instance of the view controller
+           
             let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
             
             if GVar.email.rangeOfString("@alice-smith.edu.my") != nil{
+                //open connection
                 let con = MySQL.Connection()
+                //database name
                 let db_name = "sql6133445"
                 do{
                     // open a new connection
@@ -84,14 +87,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                     //let ins_stmt = try con.prepare("INSERT INTO test(age, cash, name) VALUES(?,?,?)")
                     
                     // prepare a new statement for select
+                    //find users
                     let select_stmt = try con.query("SELECT TekTokker FROM Users WHERE Email = '"+GVar.email+"'")
                     let rows = try select_stmt.readAllRows()
-                    //                let rows2 = rows.flatMap{ $0 }
+                    
                     let select_stmttest = try con.query("SELECT * FROM Users")
                     let rowstest = try select_stmttest.readAllRows()
                     print(rowstest)
                     if(rows!.isEmpty){//New User
-                        
+                        //create new user
                         let ins_stmt = try con.prepare("INSERT INTO Users(Email, Name, TekTokker, Hired) VALUES(?,?,?,?)")
                         try ins_stmt.exec([GVar.email, GVar.fullName, "0", "0"])
                         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -102,10 +106,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         rootViewController.pushViewController(viewController, animated: true)
                         
                     }
-                    else{
-                        print(String(rows![0][0]["TekTokker"]))
-                        print(rows)
-                        if(String(rows![0][0]["TekTokker"]) == "Optional(0)"){
+                    else{//returning user
+                        
+                        if(String(rows![0][0]["TekTokker"]) == "Optional(0)"){ //not a tektokker
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             let viewController: TektokeeViewController = storyboard.instantiateViewControllerWithIdentifier("TektokeeViewController") as! TektokeeViewController
                             
@@ -114,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                             rootViewController.pushViewController(viewController, animated: true)
                             
                         }
-                        else{
+                        else{ //tektokker
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             let viewController: TektokkerViewController = storyboard.instantiateViewControllerWithIdentifier("TektokkerViewController") as! TektokkerViewController
                             
@@ -127,12 +130,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
                         }
                     }
                     
-                    // insert 300 rows
-                    /*for i in 1...300 {
-                     // use a int, float and a string
-                     try ins_stmt.exec([10+i, Float(i)/3.0, "name for \(i)"])
-                     }*/
-                    
                     
                     try con.close()
                 }
@@ -143,7 +140,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
             }
             else{
-                var myAlert = UIAlertController(title: "No Access", message: "You do not have an Alice Smith School Email", preferredStyle: UIAlertControllerStyle.Alert);
+                //alert object creation and presentation
+                let myAlert = UIAlertController(title: "No Access", message: "You do not have an Alice Smith School Email", preferredStyle: UIAlertControllerStyle.Alert);
                 let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){(ACTION) in
                     
                 }

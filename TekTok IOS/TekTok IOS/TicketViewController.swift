@@ -10,9 +10,18 @@ import UIKit
 
 class TicketViewController: UIViewController, UITextViewDelegate,  UITextFieldDelegate {
 
+    //locked oreintation
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //custom back button so it displays a confirmation message
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Bordered, target: self, action: #selector(TicketViewController.back(_:)))
         self.navigationItem.leftBarButtonItem = newBackButton;
@@ -22,7 +31,10 @@ class TicketViewController: UIViewController, UITextViewDelegate,  UITextFieldDe
     }
     var roomID = ""
     var extraInfo = ""
+    
+    //label objects text view to enable scrolling
     @IBOutlet weak var ExtraText: UITextView!
+
     @IBOutlet weak var RoomText: UITextField!
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -30,6 +42,7 @@ class TicketViewController: UIViewController, UITextViewDelegate,  UITextFieldDe
         return false
     }
     
+    //hides keyboard after use
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n"  // Recognizes enter key in keyboard
         {
@@ -43,8 +56,10 @@ class TicketViewController: UIViewController, UITextViewDelegate,  UITextFieldDe
         roomID = RoomText.text!
     }
     @IBAction func SendTicket(sender: AnyObject) {
+        //send a ticket
         extraInfo = ExtraText.text
         if(extraInfo == "" || roomID == ""){
+            //if user has not completed form, create an alert object and present it.
             let myAlert = UIAlertController(title: "Form Invalid", message: "You have not completed the form!", preferredStyle: UIAlertControllerStyle.Alert);
             let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){(ACTION) in
                 
@@ -62,6 +77,7 @@ class TicketViewController: UIViewController, UITextViewDelegate,  UITextFieldDe
                 
                 try con.use(db_name)
                 
+                //create new ticket
                 let ins_stmt = try con.prepare("INSERT INTO Tickets(TeacherName, Room, ExtraInformation, Accepted, Finished, Cancelled) VALUES(?,?,?,?,?,?)")
                 try ins_stmt.exec([GVar.fullName, roomID, extraInfo, "0", "0","0"])
                 GVar.requested = true
@@ -89,9 +105,11 @@ class TicketViewController: UIViewController, UITextViewDelegate,  UITextFieldDe
 
         }
         let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Default){(ACTION) in
+            //do nothing if answer is no.
         }
         myAlert.addAction(okAction)
         myAlert.addAction(noAction)
+        //display alert
         presentViewController(myAlert, animated: true, completion: nil)
         
         self.navigationController?.popViewControllerAnimated(true)
