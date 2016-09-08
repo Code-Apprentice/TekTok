@@ -10,6 +10,15 @@ import UIKit
 
 class TektokeeViewController: UIViewController {
     
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
+    
+    //animation
     var image1: UIImage!
     var image2: UIImage!
     var image3: UIImage!
@@ -35,7 +44,8 @@ class TektokeeViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true;
         self.welcomeMessage.text = "Welcome, " + GVar.givenName
-        
+
+        //animation
         image1 = UIImage(named: "o_d5c638efe3964d85-0.jpg")
         image2 = UIImage(named: "o_d5c638efe3964d85-1.jpg")
         image3 = UIImage(named: "o_d5c638efe3964d85-2.jpg")
@@ -72,6 +82,7 @@ class TektokeeViewController: UIViewController {
             let select_stmt = try con.prepare("SELECT * FROM Tickets WHERE TeacherName = '"+GVar.fullName+"'")
             let res = try select_stmt.query([])
             let rows = try res.readAllRows()!
+            //you have requested a ticket
             if(rows.isEmpty == false){
                 GVar.requested = true
             }
@@ -87,6 +98,7 @@ class TektokeeViewController: UIViewController {
         
     
         if(GVar.requested){
+            //requesting for help
             self.welcomeMessage.text = "Requesting for Help"
             helpRequested.hidden = true
             animation.image = animate
@@ -103,15 +115,11 @@ class TektokeeViewController: UIViewController {
             
             
             
-                
+                //while i should keep checking
             while(self.checkBool){
                 
                 do{
-                    /*
-                     SELECT column_name FROM table_name
-                     ORDER BY column_name DESC
-                     LIMIT 1;
-                    */
+                   //check for ticket if it is accepted
                     
                     let select_stmt = try con.prepare("SELECT Accepted, TekTokker FROM Tickets WHERE TeacherName = '"+GVar.fullName+"' ORDER BY Accepted DESC LIMIT 1")
                     let res = try select_stmt.query([])

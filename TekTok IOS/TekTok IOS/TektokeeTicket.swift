@@ -10,6 +10,14 @@ import UIKit
 
 class TektokeeTicket: UIViewController {
     
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
+    
     var checkBool = true
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +101,7 @@ class TektokeeTicket: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         
-        
+        //custom back button
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(TicketViewController.back(_:)))
         self.navigationItem.leftBarButtonItem = newBackButton;
@@ -101,7 +109,7 @@ class TektokeeTicket: UIViewController {
         
         dispatch_async( dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), {
             
-            
+            //background stuff
             
             NSTimer.scheduledTimerWithTimeInterval(900, target: self, selector: #selector(TektokeeViewController.update(_:)), userInfo: nil, repeats: true)
             
@@ -114,23 +122,22 @@ class TektokeeTicket: UIViewController {
                 print(e)
             }
             
-            
+            //while check
             while(self.checkBool){
                 
-                print("Check Fin/Can")
                 do{
                     
                     let select_stmt = try con.query("SELECT Cancelled, Finished FROM Tickets WHERE TeacherName = '"+GVar.fullName+"' ORDER BY Accepted DESC LIMIT 1")
                     
                     let rows = try select_stmt.readAllRows()
-                    if(!(rows!.isEmpty)){
-                        if(String(rows![0][0]["Cancelled"]) == "Optional(1)"){
+                    if(!(rows!.isEmpty)){ //if rows aren't empty
+                        if(String(rows![0][0]["Cancelled"]) == "Optional(1)"){ //if ticket cancelled
                             dispatch_async(dispatch_get_main_queue()) {
                                 let myAlert = UIAlertController(title: "Ticket Cancelled", message: "Ticket has been cancelled by TekTokker", preferredStyle: UIAlertControllerStyle.Alert);
                                 let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){(ACTION) in
                                     
-                                    //myAlert.dismissViewControllerAnimated(false, completion: nil)
                                     do{
+                                        //delete ticket
                                         try con.query("DELETE FROM Tickets WHERE TeacherName = '" + GVar.fullName + "'")
                                     }catch(let e){
                                         print(e)
@@ -146,12 +153,12 @@ class TektokeeTicket: UIViewController {
                             
                             break
                         }
-                        if(String(rows![0][0]["Finished"]) == "Optional(1)"){
+                        if(String(rows![0][0]["Finished"]) == "Optional(1)"){ //if ticket finished
                             dispatch_async(dispatch_get_main_queue()) {
                                 let myAlert = UIAlertController(title: "Task Finished", message: "Task has been completed by TekTokker", preferredStyle: UIAlertControllerStyle.Alert);
                                 let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default){(ACTION) in
-                                    //myAlert.dismissViewControllerAnimated(false, completion: nil)
                                     do{
+                                        //delete ticket
                                         try con.query("DELETE FROM Tickets WHERE TeacherName = '" + GVar.fullName + "'")
                                     }catch(let e){
                                         print(e)
@@ -204,6 +211,7 @@ class TektokeeTicket: UIViewController {
         // ...
         // Go back to the previous ViewController
         dispatch_async(dispatch_get_main_queue()) {
+            //cancel request alert if back pressed
             let myAlert = UIAlertController(title: "Cancel Request?", message: "Do you want to cancel your request?", preferredStyle: UIAlertControllerStyle.Alert);
             let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default){(ACTION) in
                 
@@ -240,8 +248,8 @@ class TektokeeTicket: UIViewController {
     @IBOutlet weak var Tektokkername: UILabel!
     
     @IBAction func FinishedTicket(sender: AnyObject) {
-        print("fin")
         dispatch_async(dispatch_get_main_queue()) {
+            //cancel request button
             let myAlert = UIAlertController(title: "Cancel Request?", message: "Do you want to cancel your request?", preferredStyle: UIAlertControllerStyle.Alert);
             let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default){(ACTION) in
                 

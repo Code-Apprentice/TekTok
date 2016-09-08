@@ -10,6 +10,16 @@ import UIKit
 
 class TicketInfoViewController: UIViewController {
 
+    //shows ticket information
+    //oreintation stuff
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
+    //new ticket object
     var ticket = Ticket()
     
     @IBOutlet weak var teacherNameOutlet: UILabel!
@@ -17,6 +27,8 @@ class TicketInfoViewController: UIViewController {
     @IBOutlet weak var extraInformationOutet: UILabel!
     @IBAction func acceptAction(sender: AnyObject) {
         
+        
+        //connection stuffs
         let con = MySQL.Connection()
         let db_name = "sql6133445"
         
@@ -26,19 +38,23 @@ class TicketInfoViewController: UIViewController {
             try con.open("sql6.freemysqlhosting.net", user: "sql6133445", passwd: "hhh6WUDEWP")
             
             try con.use(db_name)
+            //update ticket object
             
             try con.query("UPDATE Tickets SET Accepted = '1', TekTokker = '" + GVar.fullName + "' WHERE TeacherName = '"+ticket.teachername+"' LIMIT 1")
             try con.query("UPDATE Users SET Hired = '1', Email = '" + GVar.email + "' LIMIT 1")
             
+            
+            //segue back to the tektokker main menu
             performSegueWithIdentifier("backToTekTokker", sender: nil)
         }
         catch(let e){
             print(e)
         }
         
-     //"UPDATE `sql6112602`.`Tickets` SET `Accepted` = '1', `TekTokker` = '" + LoginActivity._User.Name + "'" + " WHERE `Tickets`.`TeacherName` = '" + name + "'" + " LIMIT 1 ;UPDATE `sql6112602`.`Users` SET `Hired` = '1' WHERE `Users`.`Email` = '" + LoginActivity._User.Email + "'" + " LIMIT 1 ;"
     }
     override func viewDidLoad() {
+        
+        //show info
         super.viewDidLoad()
         teacherNameOutlet.text = ticket.teachername
         roomOutlet.text = ticket.room

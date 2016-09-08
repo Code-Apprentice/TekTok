@@ -10,6 +10,14 @@ import UIKit
 
 class TableViewController: UITableViewController {
 
+    //displays tickets in a table form
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
     var ticketList:[Ticket] = GVar.tickets
     var selectedTicket:Ticket = Ticket()
     @IBOutlet var tableview: UITableView!

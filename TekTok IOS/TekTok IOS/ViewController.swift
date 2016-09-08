@@ -12,6 +12,15 @@ import GoogleSignIn
 
 class ViewController: UIViewController , GIDSignInUIDelegate {
 
+    
+    //google sign in delegate
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return UIInterfaceOrientationMask.Portrait
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
